@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday Ganu! 🚀</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--pink:#ff4fd8;--cyan:#38e8ff;--gold:#ffd84a;--violet:#8a5cff;--ink:#0b0630}
+html,body{height:100%}
+body{font-family:'Fredoka',system-ui,sans-serif;color:#fff;background:radial-gradient(circle at 20% 15%,#4b1fa8 0,transparent 45%),radial-gradient(circle at 85% 80%,#c2186e 0,transparent 45%),var(--ink);overflow:hidden}
+#sky{position:fixed;inset:0;z-index:0}
+.page{position:fixed;inset:0;z-index:1;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;text-align:center;overflow-y:auto}
+.page.on{display:flex;animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:none}}
+h1{font-family:'Pacifico',cursive;font-size:clamp(2.2rem,9vw,3.8rem);font-weight:400;line-height:1.2;background:linear-gradient(90deg,var(--gold),var(--pink),var(--cyan),var(--gold));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:flow 6s linear infinite}
+@keyframes flow{to{background-position:300% 0}}
+h2{font-size:clamp(1.4rem,6vw,2rem);font-weight:700;color:var(--gold)}
+p{font-size:1.1rem;max-width:460px;line-height:1.5}
+.big{font-size:4.5rem;animation:bob 3s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-14px) rotate(4deg)}}
+.btn{font:inherit;font-weight:700;font-size:1.15rem;color:#fff;border:0;border-radius:999px;padding:14px 30px;cursor:pointer;background:linear-gradient(90deg,var(--pink),var(--violet),var(--cyan),var(--pink));background-size:300% 100%;animation:flow 5s linear infinite;box-shadow:0 0 22px rgba(255,79,216,.7),0 6px 0 rgba(0,0,0,.3);transition:transform .15s}
+.btn:hover{transform:translateY(-3px) scale(1.05)}.btn:active{transform:translateY(3px)}
+.btn.alt{background:rgba(255,255,255,.14);animation:none;box-shadow:0 0 0 2px var(--cyan)}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.card{background:rgba(255,255,255,.1);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.25);border-radius:24px;padding:20px 24px;max-width:460px;min-height:90px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;line-height:1.5}
+.candles{display:flex;gap:26px;font-size:3rem}
+.candles span{cursor:pointer;display:inline-block;transition:.3s}
+.candles span.out{filter:grayscale(1) brightness(.6);transform:scale(.9)}
+.cake{font-size:6rem}
+.chip{font-size:1.1rem;padding:10px 16px;border-radius:16px;border:2px dashed var(--gold);background:rgba(255,255,255,.1);color:#fff;font-family:inherit;cursor:pointer}
+.chip.on{background:var(--gold);color:var(--ink);border-style:solid;transform:rotate(-4deg) scale(1.08)}
+a.btn{text-decoration:none;display:inline-block}
+#game{border:3px solid var(--cyan);border-radius:18px;background:#070320;touch-action:none;max-width:92vw;box-shadow:0 0 25px var(--cyan)}
+#letter{min-height:210px;text-align:left;white-space:pre-wrap;font-size:1.05rem}
+#fw{position:fixed;inset:0;z-index:0;pointer-events:none}
+.dim{opacity:.75;font-size:.95rem}
+.pc{position:fixed;top:-30px;z-index:5;pointer-events:none;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<canvas id="sky"></canvas><canvas id="fw"></canvas>
+
+<!-- 1 Welcome -->
+<section class="page on">
+  <div class="big">🚀</div>
+  <h1>Hey Ganu...</h1>
+  <p>I built a tiny universe just for you. It has a few surprises inside. Ready for lift-off?</p>
+  <button class="btn" onclick="nx()">Launch it ✨</button>
+</section>
+
+<!-- 2 Cake -->
+<section class="page">
+  <h1>Happy 26th, Ganu! 🎉</h1>
+  <div class="cake">🎂</div>
+  <div class="candles" id="candles"><span>🕯️</span><span>🕯️</span><span>🕯️</span></div>
+  <p id="cakeTxt">Tap each candle to blow it out. (26 candles wouldn't fit, you're too grown up.)</p>
+  <button class="btn" id="wishBtn" style="display:none" onclick="confetti();nx()">Make a wish 🌠</button>
+</section>
+
+<!-- 3 Yes/No -->
+<section class="page">
+  <div class="big">🛸</div>
+  <h1>Are you ready for your surprise?</h1>
+  <div class="row" style="position:relative;min-height:70px">
+    <button class="btn" onclick="nx()">YES! 💖</button>
+    <button class="btn alt" id="no" onmouseover="dodge()" ontouchstart="dodge(event)" onclick="dodge()">No 😈</button>
+  </div>
+  <p class="dim">(The No button is scared of you. Fair.)</p>
+</section>
+
+<!-- 4 Fun facts -->
+<section class="page">
+  <h2>🪐 Nerd corner</h2>
+  <div class="card" id="fact"></div>
+  <div class="row">
+    <button class="btn alt" onclick="fact()">Another one! 🔁</button>
+    <button class="btn" onclick="nx()">Next 🚀</button>
+  </div>
+</section>
+
+<!-- 5 Joke -->
+<section class="page">
+  <h2>🤣 Joke time</h2>
+  <div class="card" id="joke"></div>
+  <div class="row">
+    <button class="btn alt" id="punch" onclick="punch()">Reveal punchline 👀</button>
+    <button class="btn" onclick="nx()">Next 🚀</button>
+  </div>
+</section>
+
+<!-- 6 Garage -->
+<section class="page">
+  <h1>The Dream Garage 🏎️</h1>
+  <p>Pick the car you'd drive off in right now:</p>
+  <div class="row">
+    <button class="btn alt" onclick="car(0)">Innova Hycross</button>
+    <button class="btn alt" onclick="car(1)">Innova Crysta</button>
+    <button class="btn alt" onclick="car(2)">BMW</button>
+    <button class="btn alt" onclick="car(3)">Porsche</button>
+  </div>
+  <div class="card" id="carTxt">Choose wisely, Mr. Rohal 😎</div>
+  <button class="btn" onclick="nx()">Next 🚀</button>
+</section>
+
+<!-- 7 Game -->
+<section class="page">
+  <h2>🏁 Space Racer</h2>
+  <p id="gTxt">Dodge the asteroids ☄️ and grab 10 stars ⭐ to unlock the next level. Arrow keys, A/D, or drag on the screen.</p>
+  <canvas id="game" width="320" height="420"></canvas>
+  <div class="row">
+    <button class="btn" id="gStart" onclick="startGame()">Start engine 🔥</button>
+    <button class="btn alt" id="gNext" style="display:none" onclick="stopGame();nx()">Continue 🚀</button>
+  </div>
+</section>
+
+<!-- 8 Travel -->
+<section class="page">
+  <h1>Passport stamps ✈️</h1>
+  <p>Tap the places you've conquered:</p>
+  <div class="row" id="stamps">
+    <button class="chip">🗽 America</button><button class="chip">🥐 Paris</button><button class="chip">🍕 Italy</button><button class="chip">🍺 Germany</button><button class="chip">🦁 Singapore</button>
+  </div>
+  <div class="card" id="stampTxt">0 / 5 stamps collected</div>
+  <button class="btn" onclick="nx()">Next 🚀</button>
+</section>
+
+<!-- 9 Music -->
+<section class="page">
+  <h1>Our playlist 🎵</h1>
+  <p>Two songs that sound like you. Tap one, close your eyes for a minute.</p>
+  <a class="btn" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Tum+Ho+Rockstar+song">▶ Tum Ho</a>
+  <a class="btn" target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Maula+Mere+Maula+Anwar+song">▶ Maula Mere Maula</a>
+  <p class="dim">Come back here when it's done!</p>
+  <button class="btn alt" onclick="nx()">Next 🚀</button>
+</section>
+
+<!-- 10 Memory -->
+<section class="page">
+  <h1>Where it began 📱</h1>
+  <div class="card">It started with a message on Instagram. Then came our first date at Duty Free Bar, Sector 29, Gurgaon 🥂 I was nervous, you were nerdy, and somehow it was perfect.</div>
+  <p>Best "accept request" ever. 💕</p>
+  <button class="btn" onclick="nx()">Next 🚀</button>
+</section>
+
+<!-- 11 Business -->
+<section class="page">
+  <div class="big">🛡️</div>
+  <h1>CEO Ganu 💼</h1>
+  <div class="card">Rohal Technologies and Defverse. Two defence companies, built by you at 26. While most people are still figuring things out, you're building things that protect a nation. I'm so proud of you.</div>
+  <button class="btn" onclick="nx()">Next 🚀</button>
+</section>
+
+<!-- 12 Letter -->
+<section class="page">
+  <h2>💌 A letter for you</h2>
+  <div class="card" id="letter"></div>
+  <button class="btn" id="lBtn" style="display:none" onclick="nx()">One last thing 🎆</button>
+</section>
+
+<!-- 13 Finale -->
+<section class="page">
+  <h1 style="font-size:clamp(2.6rem,11vw,5rem)">Happy Birthday, Ganu! 🎆</h1>
+  <p style="font-size:1.4rem">I love you to the moon, the stars, and every galaxy beyond. 🌌</p>
+  <h2>— Smiley 😊💖</h2>
+  <button class="btn" onclick="go(0)">Replay 🔁</button>
+</section>
+
+<script>
+const pages=[...document.querySelectorAll('.page')];let cur=0;
+function go(i){cur=i;pages.forEach((p,k)=>p.classList.toggle('on',k===i));stopGame();if(i===11)typeLetter();if(i===12)fireworks();else fwOn=false;if(i===0)resetAll()}
+function nx(){go(cur+1)}
+function resetAll(){document.querySelectorAll('#candles span').forEach(s=>s.classList.remove('out'));out=0;document.getElementById('wishBtn').style.display='none';document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));document.getElementById('stampTxt').textContent='0 / 5 stamps collected';document.getElementById('gNext').style.display='none'}
+
+/* starfield */
+const sky=document.getElementById('sky'),sx=sky.getContext('2d');let stars=[];
+function sizeSky(){sky.width=innerWidth;sky.height=innerHeight;stars=Array.from({length:130},()=>({x:Math.random()*sky.width,y:Math.random()*sky.height,r:Math.random()*2+.3,s:Math.random()*.4+.1,t:Math.random()*6}))}
+sizeSky();addEventListener('resize',sizeSky);
+(function loop(){sx.clearRect(0,0,sky.width,sky.height);stars.forEach(s=>{s.t+=.03;s.y+=s.s;if(s.y>sky.height)s.y=0;sx.globalAlpha=.5+.5*Math.sin(s.t);sx.fillStyle=['#fff','#ffd84a','#38e8ff','#ff4fd8'][Math.floor(s.r)%4];sx.beginPath();sx.arc(s.x,s.y,s.r,0,7);sx.fill()});requestAnimationFrame(loop)})();
+
+/* confetti */
+function confetti(){const e=['🎉','✨','⭐','💖','🎊','🌟','🚀'];for(let i=0;i<45;i++){const d=document.createElement('div');d.className='pc';d.textContent=e[i%e.length];d.style.left=Math.random()*100+'vw';d.style.fontSize=14+Math.random()*22+'px';d.style.animationDuration=2+Math.random()*2.5+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),5000)}}
+
+/* candles */
+let out=0;
+document.querySelectorAll('#candles span').forEach(s=>s.onclick=()=>{if(s.classList.contains('out'))return;s.classList.add('out');out++;if(out===3){document.getElementById('cakeTxt').textContent='Wish made? Good. Don\'t tell anyone. 🤫';document.getElementById('wishBtn').style.display='';confetti()}});
+
+/* no button */
+function dodge(e){if(e)e.preventDefault();const b=document.getElementById('no');b.style.position='fixed';b.style.left=Math.random()*(innerWidth-110)+'px';b.style.top=Math.random()*(innerHeight-60)+'px';b.style.zIndex=9}
+
+/* facts */
+const facts=["A day on Venus is longer than its year. Venus spins so slowly it takes about 243 Earth days to rotate once, but only about 225 to orbit the Sun. 🪐","Sunlight takes about 8 minutes 20 seconds to reach Earth. If the Sun vanished, you'd have dinner in the dark before you noticed. ☀️","The Eiffel Tower can grow up to ~15 cm taller in summer because heat expands the iron. You've stood next to a growing tower! 🗼","The Porsche 911 has kept its rear-engine layout since 1963. Over 60 years of the same iconic idea. 🏎️","Parts of the German Autobahn have no general speed limit. Your kind of road, Ganu. 🇩🇪","Singapore is both a city and a country, a whole nation on a small island. 🦁","BMW began in 1916 as an aircraft engine maker, and the blue-and-white badge is often linked to a spinning propeller. ✈️"];
+let fi=-1;function fact(){fi=(fi+1)%facts.length;document.getElementById('fact').textContent=facts[fi]}fact();
+
+/* joke */
+const jokes=[["Why did the astronaut break up with the planet?","He needed space. 🚀"],["Why do programmers confuse Halloween and Christmas?","Because Oct 31 = Dec 25. 🎃"],["What did the Porsche say to the Innova?","'Nice ride, but can you fit seven friends?' And the Innova said: 'Can you?' 😂"]];
+let ji=0,shown=false;
+function showJoke(){document.getElementById('joke').textContent=jokes[ji][0];document.getElementById('punch').textContent='Reveal punchline 👀';shown=false}
+function punch(){if(!shown){document.getElementById('joke').textContent=jokes[ji][0]+'\n\n'+jokes[ji][1];document.getElementById('joke').style.whiteSpace='pre-line';document.getElementById('punch').textContent='Another joke 🔁';shown=true;confetti()}else{ji=(ji+1)%jokes.length;showJoke()}}
+showJoke();
+
+/* garage */
+const cars=["The Hycross: the CEO's smooth, silent, family-sized rocket. 🚀","The Crysta: a legend. The 'it just works' king of the road. 👑","BMW: the ultimate driving machine is coming, Ganu. Claim it! 💙","Porsche: nerdy about engineering and fast too? Perfect match. 🔥"];
+function car(i){document.getElementById('carTxt').textContent=cars[i];confetti()}
+
+/* stamps */
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{c.classList.toggle('on');const n=document.querySelectorAll('.chip.on').length;document.getElementById('stampTxt').textContent=n===5?'5 / 5! Next stop: anywhere, with me by your side ✈️💕':n+' / 5 stamps collected'});
+
+/* game */
+const g=document.getElementById('game'),gc=g.getContext('2d');let gi=null,gs;
+function startGame(){stopGame();gs={x:160,rocks:[],stars:[],score:0,t:0,left:0,right:0};document.getElementById('gStart').textContent='Restart 🔁';gi=setInterval(tick,1000/60)}
+function stopGame(){if(gi){clearInterval(gi);gi=null}}
+function tick(){
+ gs.t++;if(gs.left)gs.x-=5;if(gs.right)gs.x+=5;gs.x=Math.max(20,Math.min(300,gs.x));
+ if(gs.t%38===0)gs.rocks.push({x:Math.random()*280+20,y:-20,v:3+Math.random()*2+gs.score*.12});
+ if(gs.t%50===0)gs.stars.push({x:Math.random()*280+20,y:-20,v:3});
+ gc.fillStyle='#070320';gc.fillRect(0,0,320,420);
+ gc.font='28px serif';gc.textAlign='center';
+ gs.rocks.forEach(r=>{r.y+=r.v;gc.fillText('☄️',r.x,r.y)});
+ gs.stars.forEach(s=>{s.y+=s.v;gc.fillText('⭐',s.x,s.y)});
+ gc.font='34px serif';gc.fillText('🏎️',gs.x,395);
+ for(const r of gs.rocks)if(Math.abs(r.x-gs.x)<24&&Math.abs(r.y-385)<24){stopGame();gc.fillStyle='rgba(0,0,0,.6)';gc.fillRect(0,0,320,420);gc.fillStyle='#fff';gc.font='24px Fredoka,sans-serif';gc.fillText('Boom! 💥 Score: '+gs.score,160,200);document.getElementById('gNext').style.display='';document.getElementById('gNext').textContent='Skip level ⏭️';return}
+ gs.stars=gs.stars.filter(s=>{if(Math.abs(s.x-gs.x)<26&&Math.abs(s.y-385)<26){gs.score++;return false}return s.y<440});
+ gs.rocks=gs.rocks.filter(r=>r.y<440);
+ gc.fillStyle='#ffd84a';gc.font='20px Fredoka,sans-serif';gc.textAlign='left';gc.fillText('⭐ '+gs.score+' / 10',10,26);
+ if(gs.score>=10){stopGame();gc.fillStyle='rgba(0,0,0,.6)';gc.fillRect(0,0,320,420);gc.fillStyle='#ffd84a';gc.font='26px Fredoka,sans-serif';gc.textAlign='center';gc.fillText('YOU WIN! 🏆',160,200);document.getElementById('gNext').style.display='';document.getElementById('gNext').textContent='Continue 🚀';confetti()}
+}
+addEventListener('keydown',e=>{if(!gs)return;if(e.key==='ArrowLeft'||e.key==='a')gs.left=1;if(e.key==='ArrowRight'||e.key==='d')gs.right=1});
+addEventListener('keyup',e=>{if(!gs)return;if(e.key==='ArrowLeft'||e.key==='a')gs.left=0;if(e.key==='ArrowRight'||e.key==='d')gs.right=0});
+function drag(e){if(!gs||!gi)return;const r=g.getBoundingClientRect(),p=e.touches?e.touches[0]:e;gs.x=(p.clientX-r.left)*320/r.width}
+g.addEventListener('touchmove',e=>{e.preventDefault();drag(e)},{passive:false});g.addEventListener('touchstart',drag);g.addEventListener('mousemove',e=>{if(e.buttons)drag(e)});
+
+/* letter */
+const msg="My dearest Ganu,\n\nFrom a message on Instagram to Duty Free Bar in Sector 29, you became my favourite person.\n\nYou build companies, chase cars, collect passport stamps, and still make time to be my nerd. Watching you grow makes me so proud.\n\nMay this year bring you a BMW, a Porsche, and every dream you're chasing. And may I be right beside you for all of it.\n\nHappy Birthday, my love.\n\nForever yours,\nSmiley 💖";
+let ti=0,tt=null;
+function typeLetter(){clearInterval(tt);ti=0;const el=document.getElementById('letter');el.textContent='';document.getElementById('lBtn').style.display='none';tt=setInterval(()=>{el.textContent=msg.slice(0,++ti);if(ti>=msg.length){clearInterval(tt);document.getElementById('lBtn').style.display=''}},35)}
+
+/* fireworks */
+const fw=document.getElementById('fw'),fx=fw.getContext('2d');let fwOn=false,parts=[];
+function fireworks(){fwOn=true;fw.width=innerWidth;fw.height=innerHeight;confetti();(function burst(){if(!fwOn)return;const x=Math.random()*fw.width,y=Math.random()*fw.height*.6+40,c=Math.floor(Math.random()*360);for(let i=0;i<50;i++){const a=Math.PI*2*i/50,v=Math.random()*4+1;parts.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:70,c})}setTimeout(burst,600)})();(function draw(){if(!fwOn){fx.clearRect(0,0,fw.width,fw.height);parts=[];return}fx.fillStyle='rgba(11,6,48,.2)';fx.fillRect(0,0,fw.width,fw.height);parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.04;p.l--;fx.fillStyle='hsla('+p.c+',100%,65%,'+p.l/70+')';fx.fillRect(p.x,p.y,3,3)});parts=parts.filter(p=>p.l>0);requestAnimationFrame(draw)})()}
+</script>
+</body>
+</html>
